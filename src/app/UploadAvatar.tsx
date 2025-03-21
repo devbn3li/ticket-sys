@@ -4,21 +4,27 @@ import { useCallback, useState, useRef } from "react";
 import { useDropzone } from "react-dropzone";
 import Image from "next/image";
 
-export default function UploadAvatar({ onImageSelect }: { onImageSelect: (file: File | null) => void }) {
+export default function UploadAvatar({
+  onImageSelect,
+}: {
+  onImageSelect: (file: File | null) => void;
+}) {
   const [image, setImage] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    const file = acceptedFiles[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setImage(imageUrl);
-      setSelectedFile(file);
-      onImageSelect(file);
-    }
-  }, [onImageSelect]);
+  const onDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      const file = acceptedFiles[0];
+      if (file) {
+        const imageUrl = URL.createObjectURL(file);
+        setImage(imageUrl);
+        setSelectedFile(file);
+        onImageSelect(file);
+      }
+    },
+    [onImageSelect]
+  );
 
   const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
     onDrop,
@@ -38,16 +44,21 @@ export default function UploadAvatar({ onImageSelect }: { onImageSelect: (file: 
   };
 
   return (
-    <div className="flex flex-col items-center justify-center">
-      <label htmlFor="file-upload" className="text-white text-lg font-semibold mb-2">
+    <div className="flex flex-col items-center">
+      <label
+        htmlFor="file-upload"
+        className="text-white text-lg font-semibold mb-2"
+      >
         Upload Avatar
       </label>
 
       <div
         {...getRootProps()}
         className={`border-2 border-dashed ${
-          image ? "border-gray-700 bg-gray-800 cursor-default" : "border-gray-500 bg-[#282f3f69] cursor-pointer"
-        } rounded-lg p-6 w-96 h-28 flex flex-col items-center justify-center transition-all hover:border-blue-500 relative`}
+          image
+            ? "border-gray-700 bg-[#282f3f69] cursor-default"
+            : "border-gray-500 bg-[#282f3f69] cursor-pointer"
+        } rounded-lg p-8 w-96 max-sm:w-75 h-30 flex flex-col items-center justify-center transition-all hover:border-blue-500 relative`}
       >
         <input id="file-upload" name="file-upload" {...getInputProps()} />
 
@@ -87,7 +98,9 @@ export default function UploadAvatar({ onImageSelect }: { onImageSelect: (file: 
               className="w-10 h-10 mb-2"
             />
             <p className="text-white text-sm">
-              {isDragActive ? "Drop the file here..." : "Drag and drop or click to upload"}
+              {isDragActive
+                ? "Drop the file here..."
+                : "Drag and drop or click to upload"}
             </p>
           </>
         )}

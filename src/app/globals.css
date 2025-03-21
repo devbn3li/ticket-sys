@@ -2,6 +2,7 @@
 
 :root {
   --font-inconsolata: "Inconsolata", monospace;
+  --orange: hsl(7, 71%, 60%);
 }
 
 @font-face {
@@ -9,6 +10,10 @@
   src: url("/fonts/Inconsolata-VariableFont_wdth,wght.ttf") format("truetype");
   font-weight: 400 500 700 800;
   font-style: normal;
+}
+
+.bg-orange {
+  background-color: var(--orange);
 }
 
 body {
@@ -19,4 +24,21 @@ body {
   );
   min-height: 100vh;
   overflow-x: hidden;
+}
+
+@media (max-width: 480px) {
+  body {
+    background: url("/assets/images/background-mobile.png") center/cover no-repeat fixed;
+    background-image: image-set(
+      url("/assets/images/background-mobile.png") type("image/png")
+    );
+  }
+}
+@media (max-width: 768px) {
+  body {
+    background: url("/assets/images/background-tablet.png") center/cover no-repeat fixed;
+    background-image: image-set(
+      url("/assets/images/background-tablet.png") type("image/png")
+    );
+  }
 }
